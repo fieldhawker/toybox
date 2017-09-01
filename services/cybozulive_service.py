@@ -272,7 +272,6 @@ xmlns:cblCmnt="http://schemas.cybozulive.com/comment/2010">
 <id>{topic_id}</id>
 <entry>
 <summary type="text">{message}</summary>
-<cblCmnt:replyTo>2</cblCmnt:replyTo>
 </entry>
 </feed>\
 """.format(topic_id=topic_id, message=message)
