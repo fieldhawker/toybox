@@ -8,8 +8,8 @@ class Command(BaseCommand):
     help = 'not arts.'
 
     # 投稿先グループが未指定の場合に使用するグループ名称
-    DEFAULT_POST_GROUP_NAME = u'検証用グループ'
-    DEFAULT_POST_TOPIC_NAME = u'過去問'
+    DEFAULT_POST_GROUP_NAME = u'(株)エス・イー・プロジェクト'
+    DEFAULT_POST_TOPIC_NAME = u'いんふぉめーしょん'
     DEFAULT_POST_MESSAGE = u'テスト投稿 by python'
 
     """ Main """
@@ -25,8 +25,8 @@ class Command(BaseCommand):
             return False
 
         result = cs.post_message_bulletin_board(
-            cs.DEFAULT_POST_GROUP_NAME,
-            cs.DEFAULT_POST_TOPIC_NAME,
+            self.DEFAULT_POST_GROUP_NAME,
+            self.DEFAULT_POST_TOPIC_NAME,
             message)
 
         print(result)
