@@ -165,7 +165,7 @@ load_dotenv(dotenv_path)
 CONSUMER_TOKEN_KEY = os.environ.get("CONSUMER_TOKEN_KEY")
 CONSUMER_TOKEN_SECRET = os.environ.get("CONSUMER_TOKEN_SECRET")
 USER_ACCOUNT_USERNAME = os.environ.get("USER_ACCOUNT_USERNAME")
-USER_ACCOUNT_PASSWROD = os.environ.get("USER_ACCOUNT_PASSWROD")
+USER_ACCOUNT_PASSWORD = os.environ.get("USER_ACCOUNT_PASSWORD")
 
 LOGIN_ERROR_URL = '/accounts/login'
 LOGIN_URL = '/accounts/login/'

@@ -58,7 +58,7 @@ class CybozuliveService():
 
     USER_ACCOUNT = {
         'username': settings.USER_ACCOUNT_USERNAME,
-        'password': settings.USER_ACCOUNT_PASSWROD,
+        'password': settings.USER_ACCOUNT_PASSWORD,
         'mode': 'client_auth'
     }
     #
