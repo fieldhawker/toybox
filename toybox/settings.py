@@ -33,7 +33,7 @@ DEBUG = (os.environ.get('PRODUCTION') != 'True')
 TEMPLATE_DEBUG = (os.environ.get('PRODUCTION') != 'True')
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = ["toyboxf.herokuapp.com"]
 
 # Application definition
