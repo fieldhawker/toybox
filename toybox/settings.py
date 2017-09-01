@@ -27,10 +27,14 @@ PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
 SECRET_KEY = '-xh3w#$-))fzkx*%^=r^*()(hh4bf8#s4=@m_t)phz9wt-txhr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+# herokuのSettings.Config VariablesにPRODUCTIONを追加している
+DEBUG = (os.environ.get('PRODUCTION') != 'True')
+TEMPLATE_DEBUG = (os.environ.get('PRODUCTION') != 'True')
+
 
 ALLOWED_HOSTS = []
-
+# ALLOWED_HOSTS = ["toyboxf.herokuapp.com"]
 
 # Application definition
 
