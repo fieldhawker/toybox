@@ -30,7 +30,6 @@ SECRET_KEY = '-xh3w#$-))fzkx*%^=r^*()(hh4bf8#s4=@m_t)phz9wt-txhr'
 # DEBUG = True
 # herokuのSettings.Config VariablesにPRODUCTIONを追加している
 DEBUG = (os.environ.get('PRODUCTION') != 'True')
-TEMPLATE_DEBUG = (os.environ.get('PRODUCTION') != 'True')
 
 
 ALLOWED_HOSTS = ['*']

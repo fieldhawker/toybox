@@ -11,7 +11,7 @@ import settings
 from bs4 import BeautifulSoup
 
 from logging import getLogger
-logger = getLogger(__name__)
+logger = getLogger('normal')
 
 import codecs
 
@@ -32,10 +32,47 @@ import random
 class ScrapingService():
 
     URL_BLUEIMPULSE = 'http://www.mod.go.jp/asdf/pr_report/blueimpulse/schedule/'
+    URL_FE_SHIKEN = 'http://www.fe-siken.com/'
 
     def __init__():
 
         pass
+
+
+    def get_fe_shiken_question():
+
+        logger.info('-- START ---')
+
+        # 最新のスケジュールを拾う
+        soup = ScrapingService._request_beautiful_soup(ScrapingService.URL_FE_SHIKEN)
+
+        mondai = soup.find("div", attrs={"class": "mondai"})
+        anslink = soup.find("div", attrs={"class": "kako"}).find("div", attrs={"class": "anslink"})
+        lia = soup.find("li", attrs={"class": "lia"})
+        lii = soup.find("li", attrs={"class": "lii"})
+        liu = soup.find("li", attrs={"class": "liu"})
+        lie = soup.find("li", attrs={"class": "lie"})
+
+        message = '''{mondai}
+{anslink}
+
+ア：{lia}
+イ：{lii}
+ウ：{liu}
+エ：{lie}
+'''.format(
+        mondai=mondai.get_text(),
+        anslink=anslink.get_text(),
+        lia=lia.get_text(),
+        lii=lii.get_text(),
+        liu=liu.get_text(),
+        lie=lie.get_text())
+
+        logger.info(message)
+
+        logger.info('-- END ---')
+
+        return message
 
     def get_blueimpulse_schedule():
 
@@ -169,6 +206,13 @@ class ScrapingService():
         return result
 
     def _request_blueimpulse_schedule(url=URL_BLUEIMPULSE):
+
+        r = requests.get(url)
+        soup = BeautifulSoup(r.content, 'html.parser')
+
+        return soup
+
+    def _request_beautiful_soup(url=URL_BLUEIMPULSE):
 
         r = requests.get(url)
         soup = BeautifulSoup(r.content, 'html.parser')
