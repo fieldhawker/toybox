@@ -53,7 +53,7 @@ class ScrapingService():
         liu = soup.find("li", attrs={"class": "liu"})
         lie = soup.find("li", attrs={"class": "lie"})
 
-        if lia is None or lii is None or liu is None or lie is None
+        if lia is None or lii is None or liu is None or lie is None:
             return None
 
         message = '''{mondai}

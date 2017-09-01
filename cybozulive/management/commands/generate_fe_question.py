@@ -20,7 +20,7 @@ class Command(BaseCommand):
 
         message = ss.get_fe_shiken_question()
 
-        if message is None
+        if message is None:
             print('message is None.')
             return False
 
