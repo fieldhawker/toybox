@@ -20,12 +20,17 @@ class Command(BaseCommand):
 
         message = ss.get_fe_shiken_question()
 
+        if message is None
+            print('message is None.')
+            return False
+
         result = cs.post_message_bulletin_board(
             cs.DEFAULT_POST_GROUP_NAME,
             cs.DEFAULT_POST_TOPIC_NAME,
             message)
 
-        # print(result)
+        print(result)
+        return True
 
         # ここに実行したい処理を書く
         # print("カスタムコマンドを実行")
