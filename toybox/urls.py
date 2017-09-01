@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'^api/', include('api.urls', namespace='api')),
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^event/', include('event.urls', namespace='event')),
-    url(r'^$', include('index.urls', namespace='index')),
+    url(r'^', include('index.urls', namespace='index')),
 ]
