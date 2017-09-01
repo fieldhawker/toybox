@@ -8,8 +8,8 @@ class Command(BaseCommand):
     help = 'not arts.'
 
     # 投稿先グループが未指定の場合に使用するグループ名称
-    DEFAULT_POST_GROUP_NAME = u'自分用グループ'
-    DEFAULT_POST_TOPIC_NAME = u'メモするトピ'
+    DEFAULT_POST_GROUP_NAME = u'検証用グループ'
+    DEFAULT_POST_TOPIC_NAME = u'過去問'
     DEFAULT_POST_MESSAGE = u'テスト投稿 by python'
 
     """ Main """
@@ -25,7 +25,7 @@ class Command(BaseCommand):
             cs.DEFAULT_POST_TOPIC_NAME,
             message)
 
-        print(result)
+        # print(result)
 
         # ここに実行したい処理を書く
-        print("カスタムコマンドを実行")
+        # print("カスタムコマンドを実行")
