@@ -64,6 +64,8 @@ class ScrapingService():
                 sleep(2)
                 continue
 
+            ans_url = url + ans.get('href').replace(r'./', '')
+
             message = '''{anslink}
 
 {mondai}
@@ -73,7 +75,7 @@ class ScrapingService():
 ウ：{liu}
 エ：{lie}
 
-解答はこちら　{domain}{ans}
+解答はこちら　{ans_url}
 
 '''.format(mondai=mondai.get_text(),
             anslink=anslink.get_text(),
@@ -81,8 +83,7 @@ class ScrapingService():
             lii=lii.get_text(),
             liu=liu.get_text(),
             lie=lie.get_text(),
-            domain=url,
-            ans=ans.get('href'))
+            ans_url=ans_url)
 
             logger.info(message)
 
