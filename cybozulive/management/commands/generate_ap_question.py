@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from services import question_service
 
-# command : python manage.py generate_fe_question
+# command : python manage.py generate_ap_question
 
 class Command(BaseCommand):
     help = 'not arts.'
@@ -11,7 +11,7 @@ class Command(BaseCommand):
 
         qs = question_service.QuestionService
 
-        result = qs.get_fe_shiken_question()
+        result = qs.get_ap_shiken_question()
 
         return result
 

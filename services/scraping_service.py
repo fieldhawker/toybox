@@ -22,6 +22,7 @@ from dateutil import parser
 
 import time
 from time import mktime
+from time import sleep
 from datetime import datetime, timedelta
 
 import re
@@ -33,45 +34,93 @@ class ScrapingService():
 
     URL_BLUEIMPULSE = 'http://www.mod.go.jp/asdf/pr_report/blueimpulse/schedule/'
     URL_FE_SHIKEN = 'http://www.fe-siken.com/'
+    URL_AP_SHIKEN = 'http://www.ap-siken.com/'
+    URL_IP_SHIKEN = 'http://www.itpassportsiken.com/'
 
-    def __init__():
 
-        pass
+
+    def _get_xx_shiken_message(url):
+
+        logger.info('-- START ---')
+
+        for num in range(0, 10):
+
+            # 最新のスケジュールを拾う
+            soup = ScrapingService._request_beautiful_soup(url)
+
+            mondai = soup.find("div", attrs={"class": "mondai"})
+            anslink = soup.find("div", attrs={"class": "kako"}).find("div", attrs={"class": "anslink"})
+            ans = soup.find("div", attrs={"class": "kako"}).find("div", attrs={"class": "img_margin"}).find("a")
+            lia = soup.find("li", attrs={"class": "lia"})
+            lii = soup.find("li", attrs={"class": "lii"})
+            liu = soup.find("li", attrs={"class": "liu"})
+            lie = soup.find("li", attrs={"class": "lie"})
+
+            if mondai is None or anslink is None or ans is None:
+                sleep(2)
+                continue
+
+            if lia is None or lii is None or liu is None or lie is None:
+                sleep(2)
+                continue
+
+            message = '''{anslink}
+
+{mondai}
+
+ア：{lia}
+イ：{lii}
+ウ：{liu}
+エ：{lie}
+
+解答はこちら　{domain}{ans}
+
+'''.format(mondai=mondai.get_text(),
+            anslink=anslink.get_text(),
+            lia=lia.get_text(),
+            lii=lii.get_text(),
+            liu=liu.get_text(),
+            lie=lie.get_text(),
+            domain=url,
+            ans=ans.get('href'))
+
+            logger.info(message)
+
+            break
+
+        if message is None:
+            return None
+
+        return message
+
+
+    def get_ap_shiken_question():
+
+        logger.info('-- START ---')
+
+        message = ScrapingService._get_xx_shiken_message(ScrapingService.URL_AP_SHIKEN)
+
+        logger.info('-- END ---')
+
+        return message
 
 
     def get_fe_shiken_question():
 
         logger.info('-- START ---')
 
-        # 最新のスケジュールを拾う
-        soup = ScrapingService._request_beautiful_soup(ScrapingService.URL_FE_SHIKEN)
+        message = ScrapingService._get_xx_shiken_message(ScrapingService.URL_FE_SHIKEN)
 
-        mondai = soup.find("div", attrs={"class": "mondai"})
-        anslink = soup.find("div", attrs={"class": "kako"}).find("div", attrs={"class": "anslink"})
-        lia = soup.find("li", attrs={"class": "lia"})
-        lii = soup.find("li", attrs={"class": "lii"})
-        liu = soup.find("li", attrs={"class": "liu"})
-        lie = soup.find("li", attrs={"class": "lie"})
+        logger.info('-- END ---')
 
-        if lia is None or lii is None or liu is None or lie is None:
-            return None
+        return message
 
-        message = '''{mondai}
-{anslink}
 
-ア：{lia}
-イ：{lii}
-ウ：{liu}
-エ：{lie}
-'''.format(
-        mondai=mondai.get_text(),
-        anslink=anslink.get_text(),
-        lia=lia.get_text(),
-        lii=lii.get_text(),
-        liu=liu.get_text(),
-        lie=lie.get_text())
+    def get_ip_shiken_question():
 
-        logger.info(message)
+        logger.info('-- START ---')
+
+        message = ScrapingService._get_xx_shiken_message(ScrapingService.URL_IP_SHIKEN)
 
         logger.info('-- END ---')
 
