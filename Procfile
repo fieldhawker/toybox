@@ -1,1 +1,1 @@
-web: gunicorn toybox.wsgi --log-file -
+pbot: python run.py --log-file -
