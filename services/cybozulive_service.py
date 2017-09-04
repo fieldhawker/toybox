@@ -11,9 +11,11 @@ import settings
 
 from bs4 import BeautifulSoup
 
-from logging import Formatter, getLogger, FileHandler, StreamHandler, DEBUG
+# from logging import Formatter, getLogger, FileHandler, StreamHandler, DEBUG
 
-logger = getLogger(__name__)
+
+from logging import getLogger
+logger = getLogger('normal')
 # if not logger.handlers:
 #     log_path = os.path.dirname(os.path.abspath(
 #         __file__)) + r'/../logs/unittest.log'
@@ -50,6 +52,7 @@ class CybozuliveService():
     GROUP_ID_URL = 'https://api.cybozulive.com/api/group/V2'
     TOPIC_ID_URL = 'https://api.cybozulive.com/api/board/V2'
     COMMENT_URL = 'https://api.cybozulive.com/api/comment/V2'
+    MEMBER_LIST_URL = 'https://api.cybozulive.com/api/gwMemberList/V2'
 
     CONSUMER_TOKEN = {
         'key': settings.CONSUMER_TOKEN_KEY,
@@ -170,7 +173,7 @@ class CybozuliveService():
         params = {}
 
         response = self.request_cybozulive('GET', token, self.GROUP_ID_URL)
-        logger.info(response)
+        # logger.info(response)
 
         if response['header']['status'] == '200':
 
@@ -352,8 +355,8 @@ xmlns:cblCmnt="http://schemas.cybozulive.com/comment/2010">
                 header, body = client.request(
                     url, method=method, body=urllib.parse.urlencode(params))
 
-            logger.debug(header)
-            logger.debug(body)
+            # logger.debug(header)
+            # logger.debug(body)
 
             if header['status'] == '200':
 
