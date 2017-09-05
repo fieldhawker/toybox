@@ -77,6 +77,9 @@ class ScrapingService():
 
 解答はこちら　{ans_url}
 
+トーマツのeラーニングで試験勉強したい人用のサンプルページ
+https://se-project.co.jp/e-learning.html
+
 '''.format(mondai=mondai.get_text(),
             anslink=anslink.get_text(),
             lia=lia.get_text(),
