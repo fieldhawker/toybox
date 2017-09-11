@@ -37,8 +37,6 @@ class ScrapingService():
     URL_AP_SHIKEN = 'http://www.ap-siken.com/'
     URL_IP_SHIKEN = 'http://www.itpassportsiken.com/'
 
-
-
     def _get_xx_shiken_message(url):
 
         logger.info('-- START ---')
@@ -49,8 +47,10 @@ class ScrapingService():
             soup = ScrapingService._request_beautiful_soup(url)
 
             mondai = soup.find("div", attrs={"class": "mondai"})
-            anslink = soup.find("div", attrs={"class": "kako"}).find("div", attrs={"class": "anslink"})
-            ans = soup.find("div", attrs={"class": "kako"}).find("div", attrs={"class": "img_margin"}).find("a")
+            anslink = soup.find("div", attrs={"class": "kako"}).find(
+                "div", attrs={"class": "anslink"})
+            ans = soup.find("div", attrs={"class": "kako"}).find(
+                "div", attrs={"class": "img_margin"}).find("a")
             lia = soup.find("li", attrs={"class": "lia"})
             lii = soup.find("li", attrs={"class": "lii"})
             liu = soup.find("li", attrs={"class": "liu"})
@@ -61,6 +61,14 @@ class ScrapingService():
                 continue
 
             if lia is None or lii is None or liu is None or lie is None:
+                sleep(2)
+                continue
+
+            if not mondai.get_text() or not anslink.get_text() or not ans.get('href'):
+                sleep(2)
+                continue
+
+            if not lia.get_text() or not lii.get_text() or not liu.get_text() or not lie.get_text():
                 sleep(2)
                 continue
 
@@ -82,12 +90,12 @@ class ScrapingService():
 ┏┏　　https://se-project.co.jp/e-learning.html
 ┏
 '''.format(mondai=mondai.get_text(),
-            anslink=anslink.get_text(),
-            lia=lia.get_text(),
-            lii=lii.get_text(),
-            liu=liu.get_text(),
-            lie=lie.get_text(),
-            ans_url=ans_url)
+                anslink=anslink.get_text(),
+                lia=lia.get_text(),
+                lii=lii.get_text(),
+                liu=liu.get_text(),
+                lie=lie.get_text(),
+                ans_url=ans_url)
 
             logger.info(message)
 
@@ -98,34 +106,34 @@ class ScrapingService():
 
         return message
 
-
     def get_ap_shiken_question():
 
         logger.info('-- START ---')
 
-        message = ScrapingService._get_xx_shiken_message(ScrapingService.URL_AP_SHIKEN)
+        message = ScrapingService._get_xx_shiken_message(
+            ScrapingService.URL_AP_SHIKEN)
 
         logger.info('-- END ---')
 
         return message
-
 
     def get_fe_shiken_question():
 
         logger.info('-- START ---')
 
-        message = ScrapingService._get_xx_shiken_message(ScrapingService.URL_FE_SHIKEN)
+        message = ScrapingService._get_xx_shiken_message(
+            ScrapingService.URL_FE_SHIKEN)
 
         logger.info('-- END ---')
 
         return message
 
-
     def get_ip_shiken_question():
 
         logger.info('-- START ---')
 
-        message = ScrapingService._get_xx_shiken_message(ScrapingService.URL_IP_SHIKEN)
+        message = ScrapingService._get_xx_shiken_message(
+            ScrapingService.URL_IP_SHIKEN)
 
         logger.info('-- END ---')
 
@@ -152,19 +160,16 @@ class ScrapingService():
 
             # 画像はランダム
             images = ['https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/21149002_341616412952601_552102897551147008_n.jpg',
-            'https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/21149306_119198935480166_625130960924442624_n.jpg',
-            'https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/21149639_118676192189557_7656973884633120768_n.jpg']
-            num = random.randint(0,2)
+                      'https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/21149306_119198935480166_625130960924442624_n.jpg',
+                      'https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/21149639_118676192189557_7656973884633120768_n.jpg']
+            num = random.randint(0, 2)
             result['image'] = images[num]
-
-
 
             results.append(result)
 
         logger.info('-- END ---')
 
         return results
-
 
     def generate_blueimpulse_schedule(url=URL_BLUEIMPULSE):
 
@@ -208,7 +213,8 @@ class ScrapingService():
             if len(entry) != 0:
 
                 # 年が無いので付与
-                entry['date'] = ScrapingService._convert_md_to_ymd(entry['date'])
+                entry['date'] = ScrapingService._convert_md_to_ymd(
+                    entry['date'])
 
                 # 出力のタグ構成を今後決めよう
                 entry['link'] = ''
@@ -236,7 +242,7 @@ class ScrapingService():
             feed_url = "hhttp://test.example.com/static/xml/blueimpulse.xml"
             description = u"BlueImpulseのスケジュールです"
             language = "ja"
-            author_name=u'ブログの著者'
+            author_name = u'ブログの著者'
 
             # フィードを生成
             feed = feedgenerator.Rss201rev2Feed(
@@ -254,7 +260,8 @@ class ScrapingService():
                     title=title, link=link, description=description, pubdate=pubdate, unique_id=link)
 
             # ファイルへの出力は切り出し
-            ret = ScrapingService._export_blueimpulse_schedule_file(file_path, feed)
+            ret = ScrapingService._export_blueimpulse_schedule_file(
+                file_path, feed)
 
             result = feed.writeString("utf-8")
 
@@ -288,8 +295,8 @@ class ScrapingService():
 
         ymd = md
         if (re.search(r"^.*月.*日.*$", md)):
-            month = md.split('月',1)[0].strip()
-            day = md.split('日',1)[0].strip().split('月',1)[1].strip()
+            month = md.split('月', 1)[0].strip()
+            day = md.split('日', 1)[0].strip().split('月', 1)[1].strip()
 
             month = unicodedata.normalize('NFKC', month)
             day = unicodedata.normalize('NFKC', day)
