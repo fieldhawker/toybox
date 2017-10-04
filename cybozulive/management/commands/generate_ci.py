@@ -12,11 +12,11 @@ class Command(BaseCommand):
 
         cs = cybozulive_service.CybozuliveService
 
-        group_name = cs.DEFAULT_POST_GROUP_NAME
-        topic_name = cs.DEFAULT_POST_TOPIC_NAME
+        # group_name = cs.DEFAULT_POST_GROUP_NAME
+        # topic_name = cs.DEFAULT_POST_TOPIC_NAME
 
-        # group_name = u'(株)エス・イー・プロジェクト'
-        # topic_name = u'いんふぉめーしょん'
+        group_name = u'(株)エス・イー・プロジェクト'
+        topic_name = u'いんふぉめーしょん'
 
         message = """\
 [企業理念・経営理念]
